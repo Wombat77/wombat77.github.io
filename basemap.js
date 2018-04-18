@@ -12,25 +12,25 @@ let myLayers = {
         }
     ),
     bmapoverlay : L.tileLayer(
-        "https://maps.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", {
+        "https://{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", {
             subdomains : ["maps","maps1","maps2","maps3","maps4"],
             attribution : "Datenquelle: <a href= 'https://www.basemap.at'>basemap.at</a>"
         }
     ),
     bmapgrau : L.tileLayer(
-        "https://maps.wien.gv.at/basemap/bmagrau/normal/google3857/{z}/{y}/{x}.jpeg", {
+        "https://{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.jpeg", {
             subdomains : ["maps","maps1","maps2","maps3","maps4"],
             attribution : "Datenquelle: <a href= 'https://www.basemap.at'>basemap.at</a>"
         }
     ),
     bmaphidi : L.tileLayer(
-        "https://maps.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg", {
+        "https://{s}.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg", {
             subdomains : ["maps","maps1","maps2","maps3","maps4"],
             attribution : "Datenquelle: <a href= 'https://www.basemap.at'>basemap.at</a>"
         }
     ),
     bmaportho : L.tileLayer(
-        "https://maps.wien.gv.at/basemap//bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
+        "https://{s}.wien.gv.at/basemap//bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
             subdomains : ["maps","maps1","maps2","maps3","maps4"],
             attribution : "Datenquelle: <a href= 'https://www.basemap.at'>basemap.at</a>"
         }
@@ -42,4 +42,26 @@ let myLayers = {
 
 
 myMap.addLayer(myLayers.geolandbasemap);
+
+let myMapControl = L.control.layers({
+    "Openstreetmap" : myLayers.osm,
+    "Geolandbasemap" : myLayers.geolandbasemap,
+    "Basemapgrau" : myLayers.bmapgrau,
+    "Orthophoto" : myLayers.bmaportho,
+   
+
+
+},
+{
+    "Overlay" : myLayers.bmapoverlay,});
+myMap.addControl(myMapControl);
+
+
+
+
+
+
+
+
+
 myMap.setView([47.267,11.383],11);
