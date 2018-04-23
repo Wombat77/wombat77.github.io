@@ -6,8 +6,8 @@ let myLayers = {
     osm : L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", /*http://leafletjs.com/reference-1.3.0.html#tilelayer*/ 
         {
-            subdomains : ["maps","maps1","maps2","maps3","maps4"],                          // Doclink zur Option subdomains
-            attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"    // Doclink zur Option attribution
+            subdomains : ["maps","maps1","maps2","maps3","maps4"],                          
+            attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"    
         }
     ),
     geolandbasemap : L.tileLayer(
