@@ -73,6 +73,8 @@ let myMapControl = L.control.layers({       /*http://leafletjs.com/reference-1.3
 const uni = [47.264, 11.385];
 const usi = [47.257, 11.356];
 const technik = [47.263, 11.343];
+const patscherkofel = [47.208, 11.460];
+const igls = [47.230, 11.408];
 
 myMap.addLayer(markerGroup);
 const markeroptions = {
@@ -85,6 +87,13 @@ const markeroptions = {
 L.marker(uni, markeroptions).addTo(markerGroup);
 L.marker(usi, markeroptions).addTo(markerGroup);
 L.marker(technik, markeroptions).addTo(markerGroup);
+let patscherkoflmarker = L.marker(patscherkofel, markeroptions).addTo(markerGroup);
+patscherkoflmarker.bindPopup("<p>Patscherkofl</p><img style = 'width:300px' src = 'https://www.suedtirol-tirol.com/media/der-patscherkofel-bei-innsbruck,65642504.jpg' alt = 'Patscherkofl' />");
+L.marker(igls, markeroptions).addTo(markerGroup);
+
+
+
+
 myMap.fitBounds (markerGroup.getBounds());
 
 
