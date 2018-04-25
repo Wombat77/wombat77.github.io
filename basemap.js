@@ -31,7 +31,7 @@ let myLayers = {
             attribution : "Datenquelle: <a href= 'https://www.basemap.at'>basemap.at</a>"
         }
     ),
-    bmaportho : L.tileLayer(
+    bmaportho : L.tileLayer (
         "https://{s}.wien.gv.at/basemap//bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
             subdomains : ["maps","maps1","maps2","maps3","maps4"],
             attribution : "Datenquelle: <a href= 'https://www.basemap.at'>basemap.at</a>"

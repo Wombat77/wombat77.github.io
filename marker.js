@@ -87,11 +87,16 @@ const markeroptions = {
 L.marker(uni, markeroptions).addTo(markerGroup);
 L.marker(usi, markeroptions).addTo(markerGroup);
 L.marker(technik, markeroptions).addTo(markerGroup);
+
 let patscherkoflmarker = L.marker(patscherkofel, markeroptions).addTo(markerGroup);
 patscherkoflmarker.bindPopup("<p>Patscherkofl</p><img style = 'width:300px' src = 'https://www.suedtirol-tirol.com/media/der-patscherkofel-bei-innsbruck,65642504.jpg' alt = 'Patscherkofl' />");
-L.marker(igls, markeroptions).addTo(markerGroup);
 
 
+let iglsmarker = L.marker(igls, markeroptions).addTo(markerGroup);
+iglsmarker.bindPopup("<p>Igls</p><img style = 'width:300px' src = 'https://d181fhzpeyu8q9.cloudfront.net/fotos/0/3/1024/576/80/FFFFFF/http%3A%2F%2Ffoto-origin.images-tiscover.com%2Fat%2Fimages%2FRGN%2F494%2FRGN494at%2Figls-tirol-2cxlq.jpg/SPsX0LavDsd5dXUt8euprA%3D%3D/z/7/igls-tirol-2cxlq.jpg' alt = 'Igls' />");
+
+
+L.polyline([patscherkofel, igls], {color : "black", width : "4px"}).addTo(myMap);
 
 
 myMap.fitBounds (markerGroup.getBounds());
