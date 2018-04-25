@@ -98,6 +98,8 @@ iglsmarker.bindPopup("<p>Igls</p><img style = 'width:300px' src = 'https://d181f
 
 L.polyline([patscherkofel, igls], {color : "black", width : "4px"}).addTo(myMap);
 
+L.polygon([uni, usi, technik], {color : "green"}).addTo(myMap);
+
 
 myMap.fitBounds (markerGroup.getBounds());
 
