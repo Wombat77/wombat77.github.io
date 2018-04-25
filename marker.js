@@ -1,5 +1,6 @@
 
 let myMap = L.map("mapdiv"); /*http://leafletjs.com/reference-1.3.0.html#map-example*/
+let markerGroup = L.featureGroup();
 let myLayers = {
    
    
@@ -36,7 +37,7 @@ let myLayers = {
             subdomains : ["maps","maps1","maps2","maps3","maps4"],
             attribution : "Datenquelle: <a href= 'https://www.basemap.at'>basemap.at</a>"
         }
-    ),
+    )
 
 };
    
@@ -45,6 +46,8 @@ let myLayers = {
 
 
 myMap.addLayer(myLayers.geolandbasemap);    /*http://leafletjs.com/reference-1.3.0.html#map-methods-for-layers-and-controls*/
+myMap.addLayer
+
 let myMapControl = L.control.layers({       /*http://leafletjs.com/reference-1.3.0.html#control-layers*/
     "Openstreetmap" : myLayers.osm,
     "Geolandbasemap" : myLayers.geolandbasemap,
@@ -56,7 +59,9 @@ let myMapControl = L.control.layers({       /*http://leafletjs.com/reference-1.3
 
 },
 {
-    "Overlay" : myLayers.bmapoverlay,});
+    "basemap.at Overlay" : myLayers.bmapoverlay,
+    "Marker" : markerGroup,
+});
     myMap.addControl(myMapControl);            /*http://leafletjs.com/reference-1.3.0.html#map-other-methods*/
     L.control.scale(maxWidth = 200, metric = true).addTo(myMap);             /*Massstab hinzufügen via: http://leafletjs.com/reference-1.3.0.html#control-layers*/
     
@@ -65,8 +70,22 @@ let myMapControl = L.control.layers({       /*http://leafletjs.com/reference-1.3
     
 
 
+const uni = [47.264, 11.385];
+const usi = [47.257, 11.356];
+const technik = [47.263, 11.343];
+
+myMap.addLayer(markerGroup);
+const markeroptions = {
+    title: "Uni Innsbruck",
+    opacity: 0.8,
+    draggable : true,
+}; 
+
+
+L.marker(uni, markeroptions).addTo(markerGroup);
+L.marker(usi, markeroptions).addTo(markerGroup);
+L.marker(technik, markeroptions).addTo(markerGroup);
+myMap.fitBounds (markerGroup.getBounds());
 
 
 
-
-myMap.setView([47.267,11.383],11);          /*http://leafletjs.com/reference-1.3.0.html#control-scale*/
