@@ -140,7 +140,7 @@ L.control.scale({
 
 //console.log("Wegpunkte: ", trailjs);
 
-let gpxTrack = new L.GPX("data/etappe8.gpx", {
+let gpxTrack = new L.GPX("data/etappe08.gpx", {
     async: true,
 }).addTo(trailGroup);
 gpxTrack.on("loaded", function(evt){
