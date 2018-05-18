@@ -102,8 +102,9 @@ let myMapControl = L.control.layers({
     });
 
 //myMap.addLayer(markerGroup);
-const start = [47.166344, 11.864736]
-const ende = [47.162733, 11.745067]
+const start = [47.422778, 11.751944]
+
+const ende = [47.536594, 11.913664]
 
 let startMarker = L.marker(start,
     {
@@ -112,7 +113,7 @@ let startMarker = L.marker(start,
             iconAnchor: [16, 37]
         })
     }).addTo(markerGroup);
-startMarker.bindPopup("<h3>Mayrhofen</h3><a href = 'https://de.wikipedia.org/wiki/Mayrhofen'> Information Mayrhofen </a>");
+startMarker.bindPopup("<h3>Achensee</h3><a href = 'https://de.wikipedia.org/wiki/Achensee'> Information Achensee </a>");
 
 let endeMarker = L.marker(ende,
     {
@@ -121,7 +122,7 @@ let endeMarker = L.marker(ende,
             iconAnchor: [16, 37]
         })
     }).addTo(markerGroup);
-endeMarker.bindPopup("<h3>Lanersbach</h3> <a href = 'https://de.wikipedia.org/wiki/Lanersbach'> Information Lanersbach </a>");
+endeMarker.bindPopup("<h3>Lanersbach</h3> <a href = 'https://www.kaiserhaus.eu/'> Information Kaiserhaus </a>");
 
 
 
@@ -139,7 +140,7 @@ L.control.scale({
 
 //console.log("Wegpunkte: ", trailjs);
 
-let gpxTrack = new L.GPX("data/etappe18.gpx", {
+let gpxTrack = new L.GPX("data/etappe8.gpx", {
     async: true,
 }).addTo(trailGroup);
 gpxTrack.on("loaded", function(evt){
@@ -148,8 +149,22 @@ gpxTrack.on("loaded", function(evt){
     console.log("Niedrigster Punkt: ", evt.target.get_elevation_max().toFixed(0))
     console.log("Höhenmeter (Anstieg):", evt.target.get_elevation_gain().toFixed(0))
     console.log("Höhenmeter (Abstieg):", evt.target.get_elevation_loss().toFixed(0))
+
     let laenge = evt.target.get_distance().toFixed(0)
     document.getElementById("laenge").innerHTML=laenge;
+
+    let punkt_hoch = evt.target.get_elevation_min().toFixed(0)
+    document.getElementById("punkt_hoch").innerHTML=punkt_hoch;
+
+    let punkt_niedrig = evt.target.get_elevation_min().toFixed(0)
+    document.getElementById("punkt_niedrig").innerHTML=punkt_niedrig;
+
+    let hoehe_anstieg = evt.target.get_elevation_min().toFixed(0)
+    document.getElementById("hoehe_anstieg").innerHTML=hoehe_anstieg;
+
+    let hoehe_abstieg = evt.target.get_elevation_min().toFixed(0)
+    document.getElementById("hoehe_abstieg").innerHTML=hoehe_abstieg;
+
     myMap.fitBounds(evt.target.getBounds());
 })
 
