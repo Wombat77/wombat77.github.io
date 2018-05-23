@@ -18,6 +18,7 @@ var myMap = L.map("map", {
 let markerGroup = L.featureGroup();
 const trailGroup = L.featureGroup();
 
+
 let myLayers = {
 
     openstreetmap: L.tileLayer(
@@ -136,17 +137,20 @@ L.control.scale({
     position: "bottomleft"
 }).addTo(myMap)
 
-
+// Höhenprofil control hinzufügen
+let hoehenprofil = L.control.elevation({
+    position : "topright",
+    theme : "steelblue theme",
+}).addTo(myMap);
 
 //console.log("Wegpunkte: ", trailjs);
-
 let gpxTrack = new L.GPX("data/etappe08.gpx", {
     async: true,
 }).addTo(trailGroup);
 gpxTrack.on("loaded", function(evt){
     console.log("Distanz:", evt.target.get_distance().toFixed(0))
-    console.log("Höchster Punkt:", evt.target.get_elevation_min().toFixed(0))
-    console.log("Niedrigster Punkt: ", evt.target.get_elevation_max().toFixed(0))
+    console.log("Höchster Punkt:", evt.target.get_elevation_max().toFixed(0))
+    console.log("Niedrigster Punkt: ", evt.target.get_elevation_min().toFixed(0))
     console.log("Höhenmeter (Anstieg):", evt.target.get_elevation_gain().toFixed(0))
     console.log("Höhenmeter (Abstieg):", evt.target.get_elevation_loss().toFixed(0))
 
@@ -166,16 +170,66 @@ gpxTrack.on("loaded", function(evt){
     document.getElementById("hoehe_abstieg").innerHTML=hoehe_abstieg;
 
     myMap.fitBounds(evt.target.getBounds());
-})
-
-/*let geojson = L.geoJSON(trailjs).addTo(trailGroup);
-geojson.bindPopup(function(layer){
-    const props = layer.feature.properties
-    const popupText = `<h1>Hallo</h1>
-    //<p>Es geht</p>`;
-    return popupText;
 });
-myMap.fitBounds(trailGroup.getBounds());*/
+
+
+gpxTrack.on('addline', function(evt){
+    hoehenprofil.addData(evt.line);
+    console.log(evt.line);
+    console.log(evt.line.getLatLngs());
+    console.log.apply(evt.line.getLatLngs()[0]);
+    console.log.apply(evt.line.getLatLngs()[0].meta);
+    console.log.apply(evt.line.getLatLngs()[0].lat);
+    console.log.apply(evt.line.getLatLngs()[0].lng);
+    console.log.apply(evt.line.getLatLngs()[0].meta.ele);
+
+    //Segmente der Steigungslinie hinzufügen
+    let gpxLinie = evt.line.getLatLngs();
+    for (i = 1; i < gpxLinie.length; i++) {
+        let p1 = gpxLinie[i-1];
+        let p2 = gpxLinie[i];
+       
+        //Entfernung zwischen den Punkten berechnen
+        let dist = myMap.distance(
+            [p1.lat, p1.lng], 
+            [p2.lat, p2.lng]
+        );
+
+          // Höhenunterschied berechnen
+        let delta = p2.meta.ele - p1.meta.ele;
+
+
+        //steigung in % berechnen
+        let proz = (dist > 0) ? (delta / dist *100.0).toFixed(1) : 0;
+        
+        console.log(p1.lat, p1.lng, p2.lat, p2.lng, dist, delta, proz);
+
+        let farbe = 
+            proz > 10   ?  "#fee5d9" : 
+            proz > 6    ?  "#fcae91" : 
+            proz > 2    ?  "#fb6a4a" : 
+            proz > 0    ?  "#cb181d" : 
+            proz > -2   ?  "#e5f5e0" : 
+            proz > -6   ?  "#bae4b3" : 
+            proz > -10  ?  "#74c476" : 
+                           "#238b45n";
+        let segment = L.polyline(
+            [
+                [p1.lat, p1.lng], 
+                [p2.lat, p2.lng], 
+            ],
+            {color: farbe
+            }
+        ).addTo(map);
+
+
+    }
+});
+
+gpxTrack.on("addline",function(evt){
+	hoehenprofil.addData(evt.line);
+});
+myMap.fitBounds(trailGroup.getBounds());
 
 
 // eine neue Leaflet Karte definieren
